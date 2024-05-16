@@ -29,18 +29,6 @@ namespace SegmentRectangleIntersection.Services
             return Result.Success(intersectedRectangles);
         }
 
-        public Result Add(Rectangle rec)
-        {
-            if (rec.IsEmpty)
-            {
-                return new RectangleIsEmptyError();
-            }
-
-            InMemoryStorage.Add(rec);
-
-            return Result.Success();
-        }
-
         private IEnumerable<Rectangle> GetIntersections(IEnumerable<Rectangle> rectangles, Coordinate[] coordinates)
         {
             bool hasIntersection = false;

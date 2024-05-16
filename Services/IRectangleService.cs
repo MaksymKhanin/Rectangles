@@ -8,6 +8,5 @@ namespace SegmentRectangleIntersection.Services
     public interface IRectangleService
     {
         Result<IEnumerable<Rectangle>> GetRectangle(Coordinate[] point);
-        Result Add(Rectangle rec);
     }
 }

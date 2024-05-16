@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SegmentRectangleIntersection.Models;
 using SegmentRectangleIntersection.Services;
-using System.Drawing;
 
 namespace SegmentRectangleIntersection.Controllers
 {
@@ -20,11 +19,5 @@ namespace SegmentRectangleIntersection.Controllers
                 error => BadRequest(error),
                 notFound => NotFound(notFound));
         }
-
-
-        [HttpPost("/add")]
-        public IActionResult Add(Rectangle rec) => _rectangleService.Add(rec).Match<IActionResult>(
-                () => Accepted(),
-                error => BadRequest(error));
     }
 }
