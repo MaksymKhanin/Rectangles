@@ -8,10 +8,24 @@ Also I wrote 2 unit tests, where tested service and business logic class. Beside
 
 After all I Pushed it to Github.
 
-To test the api you have to checkout the project, launch it locally. For simplicity I added swagger, so you will see api.
+To make setup easier for you I added a dockerfile and compose file. So when you checkout repo, you need to execute:
 
-Test Api:
+docker compose up
 
-1. GetIntersectingRectangles
-   To send request to GetIntersectingRectangles method of Api, you can go to this link.
-   api/Rectangle/findIntersectingRectangles
+To test the api you have to open postman and send this request:
+
+curl --location 'http://localhost:8080/findIntersectingRectangles' \
+--header 'Content-Type: application/json' \
+--data '[
+  {
+    "x": 0,
+    "y": 3
+  },
+  {
+    "x": 3,
+    "y": 3
+    }
+]'
+
+
+You should get 1 rectangle object as response, because in inmemorystorage i added 2 rectangles, one of them will be intersecting.
