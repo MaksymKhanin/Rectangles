@@ -1,26 +1,39 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
+using SegmentRectangleIntersection.Services;
 
-namespace SegmentRectangleIntersection
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<ICalculation, Calculation>();
+builder.Services.AddScoped<IRectangleService, RectangleService>();
+
+builder.Services.AddSwaggerGen(c =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rectangles and Lines", Version = "v1" });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+builder.Services.AddControllers();
+
+var app = builder.Build();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rectangle Api v1"));
+
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
+
+app.Run();

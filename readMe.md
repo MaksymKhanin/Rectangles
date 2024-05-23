@@ -2,7 +2,7 @@ Rectangles and Segments Intersection
 
 Summary:
 
-I created a simple .Net5 Web App with simple Api controller, simple service and interface, and a business logic class.
+I created a simple .Net8.0 Web App with simple Api controller, simple service and interface, and a business logic class.
 For simplicity I used InMemoryStorage which I did via using a list of rectangles. Why list? Because I dont know number of elements, and list allowas me to add endless number of elements.
 Also I wrote 2 unit tests, where tested service and business logic class. Besides that I imlemented Result pattern for error handling.
 
