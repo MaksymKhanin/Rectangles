@@ -1,4 +1,5 @@
-﻿using SegmentRectangleIntersection.Models;
+﻿using MongoDB.Driver;
+using SegmentRectangleIntersection.Models;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,9 +9,16 @@ namespace SegmentRectangleIntersection.Services
     public class RectangleService : IRectangleService
     {
         private readonly ICalculation _calculation;
-        public RectangleService(ICalculation calculation) => _calculation = calculation;
+        private readonly IMongoCollection<Rectangle> _collection;
 
-        private static List<Rectangle> InMemoryStorage = new List<Rectangle> { new Rectangle(0, 0, 2, 2), new Rectangle(0, 0, 3, 3) };
+        public RectangleService(ICalculation calculation, IMongoDatabase database)
+        {
+            _calculation = calculation;
+            _collection = database.GetCollection<Rectangle>("Rectangles");
+        }
+        
+
+        //private static List<Rectangle> InMemoryStorage = new List<Rectangle> { new Rectangle(0, 0, 2, 2), new Rectangle(0, 0, 3, 3) };
 
         public Result<IEnumerable<Rectangle>> GetRectangle(Coordinate[] coordinates)
         {
@@ -19,7 +27,10 @@ namespace SegmentRectangleIntersection.Services
                 return new WrongDimensionsNumberError(coordinates);
             }
 
-            var intersectedRectangles = GetIntersections(InMemoryStorage, coordinates);
+            //make it async
+            var rectangles = _collection.Find(_ => true).ToList();
+
+            var intersectedRectangles = GetIntersections(rectangles, coordinates);
 
             if (!intersectedRectangles.Any())
             {

@@ -8,6 +8,10 @@ services:
       - "8080:80"
     depends_on:
       - mongodb
+    develop:
+      watch:
+        - action: rebuild
+          path: .
   mongodb:
     image: mongo:latest
     ports:
