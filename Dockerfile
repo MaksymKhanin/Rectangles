@@ -5,6 +5,7 @@ COPY Api.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet publish SegmentRectangleIntersection.sln -c Release -o /publish
+RUN dotnet test Api.Tests
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-alpine AS final
 WORKDIR /publish
