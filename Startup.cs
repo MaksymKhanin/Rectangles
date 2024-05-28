@@ -1,12 +1,11 @@
+using Api.Configurations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
 using SegmentRectangleIntersection.Services;
-using System;
 
 namespace SegmentRectangleIntersection
 {
@@ -32,10 +31,7 @@ namespace SegmentRectangleIntersection
 
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
-
-            var mongoClient = new MongoClient(Configuration["ConnectionStrings:MongoDB"]);
-            var database = mongoClient.GetDatabase("RectanglesDB");
-            services.AddSingleton<IMongoDatabase>(database);
+            services.AddMongoDb(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

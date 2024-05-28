@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
     environment:
-      - BUILD_CONFIGURATION=Release
+      - OVERRIDE_ConnectionStrings__MongoDB=mongodb://mongodb:27017
     ports:
       - "8080:80"
     depends_on:
