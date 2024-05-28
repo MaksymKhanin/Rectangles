@@ -1,8 +1,9 @@
-﻿using Api.Entities;
+﻿using Api.Business_Objects;
+using Api.Entities;
+using AutoMapper;
 using MongoDB.Driver;
 using SegmentRectangleIntersection.Models;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,11 +14,13 @@ namespace SegmentRectangleIntersection.Services
     {
         private readonly ICalculation _calculation;
         private readonly IMongoCollection<RectangleEntity> _collection;
+        private readonly IMapper _mapper;
 
-        public RectangleService(ICalculation calculation, IMongoDatabase database)
+        public RectangleService(ICalculation calculation, IMongoDatabase database, IMapper mapper)
         {
             _calculation = calculation;
             _collection = database.GetCollection<RectangleEntity>("Rectangles");
+            _mapper = mapper;
         }
         
 
@@ -32,21 +35,7 @@ namespace SegmentRectangleIntersection.Services
 
             var rectangleEntities = await _collection.Find(_ => true).ToListAsync(cancellationToken);
 
-            var rectangles = new List<Rectangle>();
-
-            //change manual mapping to automapper
-            for ( var i = 0; i < rectangleEntities.Count; i++)
-            {
-                var rectangle = new Rectangle
-                {
-                    X = rectangleEntities[i].X,
-                    Y = rectangleEntities[i].Y,
-                    Width = rectangleEntities[i].Width,
-                    Height = rectangleEntities[i].Height
-                };
-
-                rectangles.Add(rectangle);
-            }
+            var rectangles = _mapper.Map<List<RectangleEntity>, List<Rectangle>>(rectangleEntities);
 
             var intersectedRectangles = GetIntersections(rectangles, coordinates);
 
@@ -64,7 +53,10 @@ namespace SegmentRectangleIntersection.Services
 
             foreach (var rectangle in rectangles)
             {
-                hasIntersection = _calculation.HasIntersection(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom, coordinates[0].X, coordinates[0].Y, coordinates[1].X, coordinates[1].Y);
+                var top = rectangle.Y + rectangle.Height;
+                var right = rectangle.X + rectangle.Width;
+
+                hasIntersection = _calculation.HasIntersection(rectangle.X, rectangle.Y, right, top, coordinates[0].X, coordinates[0].Y, coordinates[1].X, coordinates[1].Y);
 
                 if (hasIntersection)
                 {

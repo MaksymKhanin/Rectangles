@@ -1,14 +1,7 @@
-﻿using AutoFixture.Xunit2;
-using FluentAssertions;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using Moq;
-using SegmentRectangleIntersection.Models;
 using SegmentRectangleIntersection.Services;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using Xunit;
 
 namespace Api.Tests
 {

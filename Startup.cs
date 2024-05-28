@@ -30,6 +30,7 @@ namespace SegmentRectangleIntersection
             });
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
 
             var mongoClient = new MongoClient(Configuration["ConnectionStrings:MongoDB"]);
             var database = mongoClient.GetDatabase("RectanglesDB");

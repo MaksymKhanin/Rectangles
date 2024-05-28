@@ -1,6 +1,6 @@
-﻿using SegmentRectangleIntersection.Models;
+﻿using Api.Business_Objects;
+using SegmentRectangleIntersection.Models;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 
