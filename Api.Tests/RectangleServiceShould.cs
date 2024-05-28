@@ -12,10 +12,10 @@ namespace Api.Tests
         private readonly Mock<Calculation> _calculation = new();
         private readonly Mock<IMongoDatabase> _storage = new();
 
-        public RectangleServiceShould()
-        {
-            Sut = new RectangleService(_calculation.Object, _storage.Object);
-        }
+        //public RectangleServiceShould()
+        //{
+        //    Sut = new RectangleService(_calculation.Object, _storage.Object);
+        //}
 
         //[Theory(DisplayName = "GetRectangle method should return Success and an intersecting rectangle when intersection exists")]
         //[InlineAutoData(0, 3, 3, 3, 0, 0, 3, 3)]

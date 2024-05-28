@@ -4,6 +4,8 @@ services:
     image: rectangle-image
     build:
       dockerfile: Dockerfile
+    environment:
+      - BUILD_CONFIGURATION=Release
     ports:
       - "8080:80"
     depends_on:
