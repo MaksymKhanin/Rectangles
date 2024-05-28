@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using static SegmentRectangleIntersection.Controllers.RectangleController;
-
-namespace SegmentRectangleIntersection.Models
+﻿namespace SegmentRectangleIntersection.Models
 {
     public record Error(ErrorCode errorCode, string message);
 

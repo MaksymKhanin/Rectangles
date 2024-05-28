@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using SegmentRectangleIntersection.Models;
+using System.Collections.Generic;
 using System.Drawing;
-using SegmentRectangleIntersection.Models;
-using static SegmentRectangleIntersection.Controllers.RectangleController;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SegmentRectangleIntersection.Services
 {
     public interface IRectangleService
     {
-        Result<IEnumerable<Rectangle>> GetRectangle(Coordinate[] point);
+        Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] point, CancellationToken cancellationToken);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SegmentRectangleIntersection.Models;
 using SegmentRectangleIntersection.Services;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SegmentRectangleIntersection.Controllers
 {
@@ -12,9 +14,9 @@ namespace SegmentRectangleIntersection.Controllers
         public RectangleController(IRectangleService rectangleService) => _rectangleService = rectangleService;
 
         [HttpPost("/findIntersectingRectangles")]
-        public IActionResult SendCoordinates(Coordinate[] coordinates)
+        public async Task<IActionResult> SendCoordinates(Coordinate[] coordinates, CancellationToken cancellationToken)
         {
-            return _rectangleService.GetRectangle(coordinates).Match<IActionResult>(
+            return (await _rectangleService.GetRectangle(coordinates, cancellationToken)).Match<IActionResult>(
                 success => Ok(success),
                 error => BadRequest(error),
                 notFound => NotFound(notFound));

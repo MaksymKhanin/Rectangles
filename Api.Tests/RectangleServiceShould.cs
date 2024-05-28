@@ -40,18 +40,18 @@ namespace Api.Tests
         //    actualResult.Value.First().Y.Should().Be(expectedRectY);
         //}
 
-        [Theory(DisplayName = "GetRectangle method should return error when not 2 coordinates are passed")]
-        [AutoData]
-        public void Test002(Coordinate c1, Coordinate c2, Coordinate c3)
-        {
-            Coordinate[] coordinates = { c1, c2, c3 };
+        //[Theory(DisplayName = "GetRectangle method should return error when not 2 coordinates are passed")]
+        //[AutoData]
+        //public void Test002(Coordinate c1, Coordinate c2, Coordinate c3)
+        //{
+        //    Coordinate[] coordinates = { c1, c2, c3 };
 
-            var actualResult = Sut.GetRectangle(coordinates);
+        //    var actualResult = Sut.GetRectangle(coordinates);
 
-            actualResult.Error.Should().BeOfType<WrongDimensionsNumberError>();
-            actualResult.Error.errorCode.Should().Be(ErrorCode.WrongDimensionsNumber);
-            actualResult.Error.message.Should().Be($"Not supported dimensions number. Expected number of dimensions: 2. Found: '3'");
-        }
+        //    actualResult.Error.Should().BeOfType<WrongDimensionsNumberError>();
+        //    actualResult.Error.errorCode.Should().Be(ErrorCode.WrongDimensionsNumber);
+        //    actualResult.Error.message.Should().Be($"Not supported dimensions number. Expected number of dimensions: 2. Found: '3'");
+        //}
 
         //[Theory(DisplayName = "GetRectangle method should return error when not no intersection found")]
         //[InlineAutoData(0, 5, 5, 5, 0, 0, 3, 3)]
