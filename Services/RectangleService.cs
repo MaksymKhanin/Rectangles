@@ -3,6 +3,7 @@ using Api.Entities;
 using AutoMapper;
 using MongoDB.Driver;
 using SegmentRectangleIntersection.Models;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -15,6 +16,10 @@ namespace SegmentRectangleIntersection.Services
         private readonly ICalculation _calculation;
         private readonly IMongoCollection<RectangleEntity> _collection;
         private readonly IMapper _mapper;
+
+
+        private const bool ForceNonParallel = false;
+        private readonly ParallelOptions _parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = ForceNonParallel ? 1 : -1 };
 
         public RectangleService(ICalculation calculation, IMongoDatabase database, IMapper mapper)
         {
@@ -51,7 +56,9 @@ namespace SegmentRectangleIntersection.Services
         {
             bool hasIntersection = false;
 
-            foreach (var rectangle in rectangles)
+            var concurrentBag = new ConcurrentBag<Rectangle>();
+
+            var parallelResult = Parallel.ForEach(rectangles, _parallelOptions, rectangle =>
             {
                 var top = rectangle.Y + rectangle.Height;
                 var right = rectangle.X + rectangle.Width;
@@ -60,9 +67,11 @@ namespace SegmentRectangleIntersection.Services
 
                 if (hasIntersection)
                 {
-                    yield return rectangle;
+                    concurrentBag.Add(rectangle);
                 }
-            }
+            });
+
+            return concurrentBag;
         }
     }
 }
