@@ -27,7 +27,7 @@ namespace SegmentRectangleIntersection.Services
             _collection = database.GetCollection<RectangleEntity>("Rectangles");
             _mapper = mapper;
         }
-        
+
 
         //private static List<Rectangle> InMemoryStorage = new List<Rectangle> { new Rectangle(0, 0, 2, 2), new Rectangle(0, 0, 3, 3) };
 
@@ -39,6 +39,11 @@ namespace SegmentRectangleIntersection.Services
             }
 
             var rectangleEntities = await _collection.Find(_ => true).ToListAsync(cancellationToken);
+
+            if (!rectangleEntities.Any())
+            {
+                return new NoRectanglesFoundError();
+            }
 
             var rectangles = _mapper.Map<List<RectangleEntity>, List<Rectangle>>(rectangleEntities);
 
