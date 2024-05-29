@@ -10,5 +10,12 @@ namespace Api.Entities
         public int Width { get; set; }
         public int Height { get; set; }
 
+        public RectangleEntity(int x, int y, int width, int height) : this()
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+        }
     }
 }

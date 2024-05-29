@@ -1,10 +1,12 @@
 using Api.Configurations;
+using Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Persistence;
 using SegmentRectangleIntersection.Services;
 
 namespace SegmentRectangleIntersection
@@ -23,6 +25,7 @@ namespace SegmentRectangleIntersection
         {
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
+            services.AddScoped<IStorage, MongoDbStorage>();
 
             services.AddSwaggerGen(c =>
             {
