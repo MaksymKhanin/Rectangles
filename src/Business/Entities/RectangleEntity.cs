@@ -12,6 +12,7 @@ namespace Api.Entities
 
         public RectangleEntity(int x, int y, int width, int height) : this()
         {
+            Id = ObjectId.GenerateNewId();
             X = x;
             Y = y;
             Width = width;
