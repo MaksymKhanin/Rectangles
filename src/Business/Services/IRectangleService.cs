@@ -8,6 +8,7 @@ namespace SegmentRectangleIntersection.Services
 {
     public interface IRectangleService
     {
-        Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] point, CancellationToken cancellationToken);
+        Task<Result> AddRectangle(Rectangle rectangle, CancellationToken cancellationToken);
+        Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] point, CancellationToken cancellationToken = default);
     }
 }

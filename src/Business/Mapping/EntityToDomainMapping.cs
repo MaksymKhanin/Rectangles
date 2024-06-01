@@ -11,4 +11,12 @@ namespace Api.Mapping
             CreateMap<RectangleEntity, Rectangle>();
         }
     }
+
+    public class DomainToEntityMapping : Profile
+    {
+        public DomainToEntityMapping()
+        {
+            CreateMap<Rectangle, RectangleEntity>();
+        }
+    }
 }
