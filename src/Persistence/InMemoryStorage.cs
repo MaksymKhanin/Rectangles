@@ -8,8 +8,8 @@ namespace Persistence
 {
     public class InMemoryStorage : IStorage
     {
-        private List<RectangleEntity> InMemory = new List<RectangleEntity> { new RectangleEntity(0, 0, 2, 2), new RectangleEntity(0, 0, 3, 3) };
+        private static RectangleEntity[] InMemory = { new RectangleEntity(0, 0, 2, 2), new RectangleEntity(0, 0, 3, 3) };
 
-        public async Task<List<RectangleEntity>> GetAllRectanglesAsync(CancellationToken cancellationToken) => await Task.FromResult(InMemory);
+        public async Task<IEnumerable<RectangleEntity>> GetAllRectanglesAsync(CancellationToken cancellationToken) => await Task.FromResult(InMemory);
     }
 }

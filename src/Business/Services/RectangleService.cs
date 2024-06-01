@@ -42,7 +42,7 @@ namespace SegmentRectangleIntersection.Services
                 return new NoRectanglesFoundError();
             }
 
-            var rectangles = _mapper.Map<List<RectangleEntity>, List<Rectangle>>(rectangleEntities);
+            var rectangles = _mapper.Map<IEnumerable<Rectangle>>(rectangleEntities);
 
             var intersectedRectangles = GetIntersections(rectangles, coordinates);
 

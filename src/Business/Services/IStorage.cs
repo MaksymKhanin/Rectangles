@@ -7,6 +7,6 @@ namespace Business.Services
 {
     public interface IStorage
     {
-        public Task<List<RectangleEntity>> GetAllRectanglesAsync(CancellationToken cancellationToken);
+        public Task<IEnumerable<RectangleEntity>> GetAllRectanglesAsync(CancellationToken cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
 using Api.Configurations;
+using Api.Mapping;
 using Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +34,7 @@ namespace SegmentRectangleIntersection
             });
 
             services.AddControllers();
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(EntityToDomainMapping));
             services.AddMongoDb(Configuration);
         }
 
