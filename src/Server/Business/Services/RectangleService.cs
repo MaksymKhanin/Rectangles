@@ -28,7 +28,7 @@ namespace SegmentRectangleIntersection.Services
             _storage = storage;
         }
 
-        public async Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] coordinates, CancellationToken cancellationToken)
+        public async Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] coordinates, CancellationToken cancellationToken = default)
         {
             if (coordinates.Length != 2)
             {
@@ -52,6 +52,22 @@ namespace SegmentRectangleIntersection.Services
             }
 
             return Result.Success(intersectedRectangles);
+        }
+
+        public async Task<Result> AddRectangle(Rectangle rectangle, CancellationToken cancellationToken)
+        {
+            var rectangleEntity = _mapper.Map<RectangleEntity>(rectangle);
+            
+            await _storage.AddRectangle(rectangleEntity, cancellationToken);
+
+            return Result.Success();
+        }
+
+        public async Task<Result> ClearAsync(CancellationToken cancellationToken)
+        {
+            await _storage.ClearAsync(cancellationToken);
+
+            return Result.Success();
         }
 
         private IEnumerable<Rectangle> GetIntersections(IEnumerable<Rectangle> rectangles, Coordinate[] coordinates)
