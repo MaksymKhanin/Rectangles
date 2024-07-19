@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Api.Business_Objects;
+using Microsoft.AspNetCore.Mvc;
 using SegmentRectangleIntersection.Models;
 using SegmentRectangleIntersection.Services;
 using System.Threading;
@@ -20,6 +21,19 @@ namespace SegmentRectangleIntersection.Controllers
                 success => Ok(success),
                 error => BadRequest(error),
                 notFound => NotFound(notFound));
+        }
+
+        [HttpPost("/addRectangle")]
+        public async Task<IActionResult> AddRectangle(Rectangle rectangle, CancellationToken cancellationToken)
+        {
+            var result = await _rectangleService.AddRectangle(rectangle, cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
         }
     }
 }

@@ -26,7 +26,9 @@ namespace SegmentRectangleIntersection
         {
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
-            services.AddScoped<IStorage, MongoDbStorage>();
+
+            services.AddScoped<IStorage, InMemoryStorage>();
+            //services.AddScoped<IStorage, MongoDbStorage>();
 
             services.AddSwaggerGen(c =>
             {
