@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 
 #nullable enable
 namespace SegmentRectangleIntersection.Models
@@ -31,15 +32,20 @@ namespace SegmentRectangleIntersection.Models
         public TResult Match<TResult>(Func<TResult> success, Func<Error, TResult> error) => IsSuccess ? success() : error(Error!);
 
         public static implicit operator Result(Error error) => new Result(false, error);
+
+        public static Error FailAndLog<T>(Error error, ILogger<T> logger)
+        {
+            logger.LogError(error.Message);
+            return error;
+        }
     }
 
     public class Result<T> : Result
     {
         public Result(T? value, bool isSuccess, Error? error) : base(isSuccess, error) => Value = value;
         public T? Value { get; set; }
-        public TResult Match<TResult>(Func<T, TResult> success, Func<Error, TResult> error, Func<NoIntersectionFoundError, TResult> notFound) => IsSuccess ? success(Value!) : Error is NoIntersectionFoundError ? notFound(Error as NoIntersectionFoundError) : error(Error!);
+        public TResult Match<TResult>(Func<T, TResult> success, Func<Error, TResult> error, Func<NotFoundError, TResult> notFound) => IsSuccess ? success(Value!) : Error is NotFoundError ? notFound((NotFoundError)Error) : error(Error!);
 
         public static implicit operator Result<T>(Error? error) => new Result<T>(default, false, error);
-
     }
 }
