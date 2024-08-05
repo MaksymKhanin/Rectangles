@@ -63,6 +63,13 @@ namespace SegmentRectangleIntersection.Services
             return Result.Success();
         }
 
+        public async Task<Result> ClearAsync(CancellationToken cancellationToken)
+        {
+            await _storage.ClearAsync(cancellationToken);
+
+            return Result.Success();
+        }
+
         private IEnumerable<Rectangle> GetIntersections(IEnumerable<Rectangle> rectangles, Coordinate[] coordinates)
         {
             bool hasIntersection = false;

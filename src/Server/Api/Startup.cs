@@ -27,8 +27,11 @@ namespace SegmentRectangleIntersection
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
 
-            services.AddScoped<IStorage, InMemoryStorage>();
-            //services.AddScoped<IStorage, MongoDbStorage>();
+            //dockerservices.AddScoped<IStorage, InMemoryStorage>();
+            services.AddScoped<IStorage, MongoDbStorage>();
+
+            services.AddCors();
+
 
             services.AddSwaggerGen(c =>
             {
@@ -52,6 +55,8 @@ namespace SegmentRectangleIntersection
             }
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
             app.UseAuthorization();
 

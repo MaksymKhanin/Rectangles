@@ -1,5 +1,6 @@
 ﻿using Api.Entities;
 using Business.Services;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,5 +14,6 @@ namespace Persistence
         public MongoDbStorage(IMongoDatabase database) => _collection = database.GetCollection<RectangleEntity>("Rectangles");
         public async Task<IEnumerable<RectangleEntity>> GetAllRectanglesAsync(CancellationToken cancellationToken) => await _collection.Find(_ => true).ToListAsync(cancellationToken);
         public async Task AddRectangle(RectangleEntity rectangleEntity, CancellationToken cancellationToken) => await _collection.InsertOneAsync(rectangleEntity, null, cancellationToken);
+        public async Task ClearAsync(CancellationToken cancellationToken) => await _collection.DeleteManyAsync(new BsonDocument());
     }
 }

@@ -35,5 +35,18 @@ namespace SegmentRectangleIntersection.Controllers
 
             return Ok();
         }
+
+        [HttpPost("/clear")]
+        public async Task<IActionResult> Clear(CancellationToken cancellationToken)
+        {
+            var result = await _rectangleService.ClearAsync(cancellationToken);
+
+            if (result.IsFailure)
+            {
+                return BadRequest();
+            }
+
+            return Ok();
+        }
     }
 }
