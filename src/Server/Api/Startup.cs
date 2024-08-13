@@ -1,5 +1,6 @@
 using Api.Configurations;
 using Api.Mapping;
+using Api.Middleware;
 using Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,7 @@ namespace SegmentRectangleIntersection
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
 
-            //dockerservices.AddScoped<IStorage, InMemoryStorage>();
+            //services.AddScoped<IStorage, InMemoryStorage>();
             services.AddScoped<IStorage, MongoDbStorage>();
 
             services.AddCors();
@@ -59,6 +60,8 @@ namespace SegmentRectangleIntersection
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

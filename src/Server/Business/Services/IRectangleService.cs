@@ -10,6 +10,6 @@ namespace SegmentRectangleIntersection.Services
     {
         Task<Result> AddRectangle(Rectangle rectangle, CancellationToken cancellationToken);
         Task<Result> ClearAsync(CancellationToken cancellationToken);
-        Task<Result<IEnumerable<Rectangle>>> GetRectangle(Coordinate[] point, CancellationToken cancellationToken = default);
+        Task<Result<IEnumerable<Rectangle>>> GetRectanglesByCoordinates(Coordinate[] point, CancellationToken cancellationToken = default);
     }
 }
