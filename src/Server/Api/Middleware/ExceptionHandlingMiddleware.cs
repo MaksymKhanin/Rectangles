@@ -12,23 +12,19 @@ namespace Api.Middleware
 
         public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
-            _next = next 
-                ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger 
-                ?? throw new ArgumentNullException(nameof(logger));
+            _next = next;
+            _logger = logger;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context is null) { throw new ArgumentNullException(nameof(context)); }
-
             try
             {
                 await _next(context);
             }
             catch (Exception exception)
             {
-                _logger.LogError(exception, "Exception occured: {Message}", exception.Message);
+                _logger.LogError(exception, "Something went wrong with message: {Message}", exception.Message);
 
                 var problemDetails = new
                 {

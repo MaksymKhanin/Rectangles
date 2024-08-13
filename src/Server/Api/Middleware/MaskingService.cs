@@ -102,4 +102,9 @@ namespace Api.Middleware
                 .Select(s => !string.IsNullOrEmpty(s) ? LoggingConstant.MaskValue : s));
         }
     }
+
+    public interface IMaskingService
+    {
+        string MaskJsonProperties(string body, IReadOnlyCollection<string> maskProperties, LogLevel logLevel = LogLevel.Information);
+    }
 }

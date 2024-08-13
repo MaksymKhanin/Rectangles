@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SegmentRectangleIntersection.Models;
 using SegmentRectangleIntersection.Services;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,10 +16,8 @@ namespace SegmentRectangleIntersection.Controllers
         private readonly ILogger<RectangleController> _logger;
         public RectangleController(IRectangleService rectangleService, ILogger<RectangleController> logger)
         {
-            _rectangleService = rectangleService
-                ?? throw new ArgumentNullException(nameof(rectangleService));
-            _logger = logger
-                ?? throw new ArgumentNullException(nameof(logger));
+            _rectangleService = rectangleService;
+            _logger = logger;
         }
 
         [HttpPost("/findIntersectingRectangles")]

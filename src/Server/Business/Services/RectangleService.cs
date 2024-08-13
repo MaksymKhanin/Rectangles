@@ -26,14 +26,10 @@ namespace SegmentRectangleIntersection.Services
 
         public RectangleService(ICalculation calculation, IMapper mapper, IStorage storage, ILogger<RectangleService> logger)
         {
-            _calculation = calculation
-                ?? throw new ArgumentNullException(nameof(calculation));
-            _mapper = mapper
-                ?? throw new ArgumentNullException(nameof(mapper));
-            _storage = storage
-                ?? throw new ArgumentNullException(nameof(storage));
-            _logger = logger
-                ?? throw new ArgumentNullException(nameof(logger));
+            _calculation = calculation;
+            _mapper = mapper;
+            _storage = storage;
+            _logger = logger;
         }
 
         /// <summary>
