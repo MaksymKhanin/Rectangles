@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 
 namespace Api.Middleware
 {
@@ -13,12 +13,16 @@ namespace Api.Middleware
 
         public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
-            _next = next;
-            _logger = logger;
+            _next = next 
+                ?? throw new ArgumentNullException(nameof(next));
+            _logger = logger 
+                ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context is null) { throw new ArgumentNullException(nameof(context)); }
+
             try
             {
                 await _next(context);
