@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using System;
 
@@ -13,12 +14,16 @@ namespace Api.Middleware
 
         public ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)
         {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _next = next 
+                ?? throw new ArgumentNullException(nameof(next));
+            _logger = logger 
+                ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
+            if (context is null) { throw new ArgumentNullException(nameof(context)); }
+
             try
             {
                 await _next(context);
@@ -30,8 +35,9 @@ namespace Api.Middleware
                 var problemDetails = new ProblemDetails
                 {
                     Status = StatusCodes.Status500InternalServerError,
-                    Title = "Server Error",
-                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1"
+                    Title = LoggingConstant.GenericErrorMessage,
+                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
+                    Detail = context.TraceIdentifier
                 };
 
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;

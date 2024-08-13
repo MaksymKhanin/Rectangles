@@ -5,6 +5,7 @@ using Business.Services;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using SegmentRectangleIntersection.Models;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,14 @@ namespace SegmentRectangleIntersection.Services
 
         public RectangleService(ICalculation calculation, IMapper mapper, IStorage storage, ILogger<RectangleService> logger)
         {
-            _calculation = calculation;
-            _mapper = mapper;
-            _storage = storage;
-            _logger = logger;
+            _calculation = calculation
+                ?? throw new ArgumentNullException(nameof(calculation));
+            _mapper = mapper
+                ?? throw new ArgumentNullException(nameof(mapper));
+            _storage = storage
+                ?? throw new ArgumentNullException(nameof(storage));
+            _logger = logger
+                ?? throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
