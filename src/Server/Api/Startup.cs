@@ -27,6 +27,7 @@ namespace SegmentRectangleIntersection
         {
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
+            services.AddSingleton<IMaskingService, MaskingService>();
 
             //services.AddScoped<IStorage, InMemoryStorage>();
             services.AddScoped<IStorage, MongoDbStorage>();
@@ -61,6 +62,7 @@ namespace SegmentRectangleIntersection
 
             app.UseAuthorization();
 
+            app.UseMiddleware<LoggingMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseEndpoints(endpoints =>
