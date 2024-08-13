@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using System;
 
 namespace Api.Middleware
 {
@@ -32,12 +30,11 @@ namespace Api.Middleware
             {
                 _logger.LogError(exception, "Exception occured: {Message}", exception.Message);
 
-                var problemDetails = new ProblemDetails
+                var problemDetails = new
                 {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = LoggingConstant.GenericErrorMessage,
-                    Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.6.1",
-                    Detail = context.TraceIdentifier
+                    StatusCode = StatusCodes.Status500InternalServerError,
+                    ErrorMessage = LoggingConstant.GenericErrorMessage,
+                    RequestId = context.TraceIdentifier
                 };
 
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;

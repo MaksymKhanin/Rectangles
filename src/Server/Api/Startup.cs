@@ -27,6 +27,9 @@ namespace SegmentRectangleIntersection
         {
             services.AddScoped<ICalculation, Calculation>();
             services.AddScoped<IRectangleService, RectangleService>();
+
+            services.AddHttpContextAccessor();
+            services.AddScoped<IHttpContextService, HttpContextService>();
             services.AddSingleton<IMaskingService, MaskingService>();
 
             //services.AddScoped<IStorage, InMemoryStorage>();

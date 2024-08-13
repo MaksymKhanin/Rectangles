@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace Api.Middleware
@@ -43,13 +46,12 @@ namespace Api.Middleware
                 context.Response.Headers.Add(LoggingConstant.ResponseRequestIdKey, context.TraceIdentifier);
 
                 await _next(context);
-
-                var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
-
-                await ProcessEndLogAsync(elapsedMs, requestBody, context, responseBodyStream, originalResponseBodyStream, httpContextService);
             }
             finally
             {
+                var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
+                await ProcessEndLogAsync(elapsedMs, requestBody, context, responseBodyStream, originalResponseBodyStream, httpContextService);
+
                 await responseBodyStream.DisposeAsync();
                 context.Response.Body = originalResponseBodyStream;
             }
@@ -79,7 +81,7 @@ namespace Api.Middleware
             if (exception is not null) { return LogLevel.Error; }
 
             return !IsSuccessStatusCode(statusCode)
-                ? LogLevel.Warning
+                ? LogLevel.Error
                 : LogLevel.Information;
         }
 
